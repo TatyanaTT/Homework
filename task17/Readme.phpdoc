@@ -1,0 +1,12 @@
+This is 13th homework.
+
+In file "index" you can see example of using this project.
+The main classes are Article and ArticleManager.
+Object of class ArticleManager can use 2 methods: getById and save.
+GetById has one argument - integer number - id.
+GetById returns object from database `blog` with the same id that in method's argument
+and also this object from class Article.
+Save has also one argument - object from class BaseEntity that is parent class Article.
+Method save deals with database `blog` too with argument from class Article (in our file).
+It will create row in `blog` if id-property  from object Article isn't exist.
+But if id exists then method update information.
