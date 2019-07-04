@@ -1,12 +1,14 @@
 <?php
 
-require "/var/www/html/sandbox/git/Homework/task16/Entity/BaseEntity.php";
+namespace Entity;
+use Entity\BaseEntity;
+use Entity\User;
 class Article extends BaseEntity
 {
     private $title;
     private $text;
     private $blogger;
-    private $isPublish;
+
 
     /**
      * Article constructor.
@@ -15,7 +17,7 @@ class Article extends BaseEntity
      * @param $blogger
      *
      */
-    public function __construct($id,$title, $text, $blogger)
+    public function __construct($id,$title, $text, User $blogger)
     {
         $this->setId($id);
         $this->title = $title;
@@ -51,7 +53,7 @@ class Article extends BaseEntity
      */
     public function getBlogger()
     {
-        return $this->blogger;
+        return $this->blogger->getId();
     }
 
 }

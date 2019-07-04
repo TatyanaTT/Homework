@@ -1,48 +1,58 @@
 <?php
+
+namespace Service;
 error_reporting(E_ALL);
-ini_set('display_errors','On');
-require "/var/www/html/sandbox/git/Homework/task16/config/config.php";
-require "/var/www/html/sandbox/git/Homework/task16/Entity/Article.php";
-require "/var/www/html/sandbox/git/Homework/task16/Service/Interface/EntityManagerInterface.php";
-class ArticleManager implements EntityManagerInterface
+ini_set('display_errors', 'On');
+
+use Entity\Article;
+use Entity\BaseEntity;
+use Entity\EntityManager;
+use Entity\MysqlConfig;
+use Entity\User;
+
+class ArticleManager extends EntityManager
 {
+
+    public function __construct(MysqlConfig $myDB)
+    {
+        $this->myDB = $myDB;
+    }
 
     public function getById(int $id)
     {
         $query = "SELECT * From blog WHERE id = $id";
-        $selectById = mysqli_query($this->connection(), $query);
+        $selectById = mysqli_query($this->myDB->connect(), $query);
         $rows = mysqli_fetch_array($selectById, MYSQLI_ASSOC);
-        $object = new Article($id,$rows['title'],$rows['text'],$rows['blogger']);
+        $blogger = new User(null,null,null,null);
+        if (!empty($rows['blogger'])) {
+            $query = "SELECT * FROM users WHERE id =" . $rows['blogger'];
+            $selectByIdU = mysqli_query($this->myDB->connect(), $query);
+            $rowsUser = mysqli_fetch_array($selectByIdU, MYSQLI_ASSOC);
+            $blogger = new User($rows['blogger'], $rowsUser['name'], $rowsUser['surname'], $rowsUser['email']);
+        }
+        else{
+            print_r("Sorry... But this article without blogger <br>");
+        }
+        $object = new Article($id, $rows['title'], $rows['text'], $blogger);
         return $object;
     }
 
     public function save(BaseEntity $object)
     {
-        $query = "SELECT COUNT(id) AS id1 FROM blog WHERE id =".$object->getId();
-        $selectById = mysqli_query($this->connection(), $query);
+        $query = "SELECT COUNT(id) AS id1 FROM blog WHERE id =" . $object->getId();
+        $selectById = mysqli_query($this->myDB->connect(), $query);
         $rows = mysqli_fetch_array($selectById, MYSQLI_ASSOC);
-        if (empty($rows['id1'])){
+        if (empty($rows['id1'])) {
             $query = "INSERT INTO `blog` (blog.id,blog.title, blog.text,blog.blogger) 
-                        VALUES ('".$object->getId()."','".$object->getTitle()."','
-                        ".$object->getText()."','".$object->getBlogger()."')";
+                        VALUES ('" . $object->getId() . "','" . $object->getTitle() . "','
+                        " . $object->getText() . "','" . $object->getBlogger() . "')";
+        } else {
+            $query = "UPDATE blog SET title=" . $object->getTitle() . ", text =" . $object->getText() .
+                ", blogger=" . $object->getBlogger() . "WHERE id=" . $object->getId();
         }
-        else {
-            $query = "UPDATE blog SET title=".$object->getTitle().", text =".$object->getText().
-                ", blogger=".$object->getBlogger()."WHERE id=".$object->getId();
-        }
-        $selectById = mysqli_query($this->connection(), $query);
+        $selectById = mysqli_query($this->myDB->connect(), $query);
 
     }
 
-    private function connection()
-    {
-        $link = mysqli_connect(host, user, password)
-        or die ('Can\'t connect' . mysqli_error());
-        mysqli_select_db($link, databaseName) or die ('Can\'t find');
-        return $link;
-    }
 }
-$artM = new ArticleManager();
-$art = new Article(1220,1,12,0041);
-print_r($artM->getById(2));
-$artM->save($art);
+
