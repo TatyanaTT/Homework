@@ -1,8 +1,8 @@
 <?php
 
 
-namespace Entity;
-use Entity\DatabaseConfig;
+namespace config;
+
 require "/var/www/html/sandbox/git/Homework/task17/config/config.php";
 
 class MysqlConfig extends DatabaseConfig

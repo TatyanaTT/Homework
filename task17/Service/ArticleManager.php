@@ -4,16 +4,15 @@ namespace Service;
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
+use config\DatabaseConfig;
 use Entity\Article;
 use Entity\BaseEntity;
-use Entity\EntityManager;
-use Entity\MysqlConfig;
 use Entity\User;
 
 class ArticleManager extends EntityManager
 {
 
-    public function __construct(MysqlConfig $myDB)
+    public function __construct(DatabaseConfig $myDB)
     {
         $this->myDB = $myDB;
     }

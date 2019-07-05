@@ -2,7 +2,7 @@
 namespace Entity;
 error_reporting(E_ALL);
 ini_set('display_errors','On');
-class BaseEntity
+abstract class BaseEntity
 {
     private $id;
     /**

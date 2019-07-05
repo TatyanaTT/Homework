@@ -3,15 +3,13 @@
 
 namespace Service;
 
-
-use Entity\EntityManager;
-use Entity\MysqlConfig;
+use config\DatabaseConfig;
 use Entity\BaseEntity;
 use Entity\User;
 
 class UserManager extends EntityManager
 {
-    public function __construct(MysqlConfig $myDB){
+    public function __construct(DatabaseConfig $myDB){
         $this->myDB = $myDB;
     }
     public function getById(int $id){

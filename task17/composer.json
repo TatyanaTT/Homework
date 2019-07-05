@@ -3,7 +3,8 @@
     "psr-4": {
       "Entity\\": "Entity",
       "Service\\": "Service",
-      "MyInterface\\": "Service/Interface"
+      "MyInterface\\": "Service/Interface",
+      "config\\": "config"
     }
   }
 }

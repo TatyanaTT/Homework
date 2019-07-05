@@ -2,7 +2,7 @@
 
 
 namespace Entity;
-use Entity\BaseEntity;
+
 
 class User extends BaseEntity
 {

@@ -1,8 +1,7 @@
 <?php
 
 namespace Entity;
-use Entity\BaseEntity;
-use Entity\User;
+
 class Article extends BaseEntity
 {
     private $title;
@@ -24,12 +23,6 @@ class Article extends BaseEntity
         $this->text = $text;
         $this->blogger = $blogger;
 
-    }
-
-    public function publish()
-    {
-        $this->isPublish=true;
-        echo "The article was published <br>";
     }
 
     /**
