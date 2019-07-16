@@ -1,7 +1,7 @@
 <?php
 
 
-namespace config;
+namespace Service;
 
 require "/var/www/html/sandbox/git/Homework/task17/config/config.php";
 

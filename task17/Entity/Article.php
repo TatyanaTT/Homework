@@ -11,6 +11,7 @@ class Article extends BaseEntity
 
     /**
      * Article constructor.
+     * @param $id
      * @param $title
      * @param $text
      * @param $blogger

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace config;
+namespace Service;
 use Exception;
 
 class DatabaseConfig

@@ -3,16 +3,18 @@
 
 namespace Service;
 
-use config\DatabaseConfig;
 use Entity\BaseEntity;
 use Entity\User;
 
 class UserManager extends EntityManager
 {
-    public function __construct(DatabaseConfig $myDB){
-        $this->myDB = $myDB;
+    /**
+     * UserManager constructor.
+     */
+    public function __construct(){
+        $this->myDB = new MysqlConfig();
     }
-    public function getById(int $id){
+    public function getById(int $id): ?BaseEntity {
         $query = "SELECT * From users WHERE id = $id";
         $selectById = mysqli_query($this->myDB->connect(), $query);
         $rows = mysqli_fetch_array($selectById, MYSQLI_ASSOC);
